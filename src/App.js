@@ -9,11 +9,11 @@ import * as BooksAPI from './BooksAPI'
 class BooksApp extends React.Component {
   state = {
     books:[]
-  }
+  };
 
   componentDidMount=()=>{
     this.loadBooks()
-  }
+  };
 
   loadBooks=()=>{
     BooksAPI.getAll().then((books)=>{
@@ -21,7 +21,7 @@ class BooksApp extends React.Component {
         books
       });
     });
-  }
+  };
 
   onSearch=(query,maxResults)=>{
     return new Promise((resolve,reject)=>{
@@ -29,14 +29,14 @@ class BooksApp extends React.Component {
           (books)=>resolve(books)
         );
     });
-  }
+  };
 
   onShelfChange=(book,shelf)=>{
     BooksAPI.update(book,shelf).then(
       (shelfs)=>{
         this.loadBooks();
       });
-  }
+  };
 
   render() {
     return (
