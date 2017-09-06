@@ -1,6 +1,7 @@
 import React from 'react'
 import serializeForm from 'form-serialize'
 import BooksGrid from './BooksGrid'
+import { Link } from 'react-router-dom'
 
 class SearchBooks extends React.Component{
   handleSubmit=(e)=>{
@@ -29,7 +30,7 @@ class SearchBooks extends React.Component{
       <div className="search-books">
         <form onSubmit={this.handleSubmit}>
         <div className="search-books-bar">
-          <a className="btn-search close-search" onClick={this.props.closeSearch}>Close</a>
+          <Link to="/" className="btn-search close-search">Close</Link>
           <div className="search-books-input-wrapper">
             {/*
               NOTES: The search from BooksAPI is limited to a particular set of search terms.
@@ -47,7 +48,7 @@ class SearchBooks extends React.Component{
         </div>
         </form>
         <div className="search-books-results">
-          <BooksGrid books={this.state.books}  getShelfName={this.props.getShelfName} onShelfChange={this.props.onShelfChange}/>
+          <BooksGrid books={this.state.books}  onShelfChange={this.props.onShelfChange}/>
         </div>
       </div>
     );
