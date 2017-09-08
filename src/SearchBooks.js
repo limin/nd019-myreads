@@ -1,13 +1,12 @@
 import React from 'react'
-import serializeForm from 'form-serialize'
 import BooksGrid from './BooksGrid'
 import { Link } from 'react-router-dom'
 
 class SearchBooks extends React.Component{
-  handleSubmit=(e)=>{
-    e.preventDefault();
-    const obj=serializeForm(e.target,{hash:true});
-    this.props.onSearch(obj.query,10).then(
+  search=(e)=>{
+    //e.preventDefault();
+    //const obj=serializeForm(e.target,{hash:true});
+    this.props.onSearch(e.target.value,10).then(
       (bks)=>{
         let callback=(book)=>{
           let fbks=this.props.books.filter((b)=>b.id===book.id);
@@ -17,18 +16,35 @@ class SearchBooks extends React.Component{
             return fbks[0];
           }
         }
-        let books=bks.map(callback);
+        let books=[];
+        if(Array.isArray(bks)){
+          books=bks.map(callback);
+        }
         this.setState({books});
       }
     );
   };
+
+  onShelfChange=(book,shelf)=>{
+    this.props.onShelfChange(book,shelf);
+    let books=this.state.books.map(
+      (bk)=>{
+        if(book.id===bk.id){
+          book.shelf=shelf;
+          return book;
+        }else{
+          return bk;
+        }
+      }
+    );
+    this.setState({books});
+  }
   state={
     books:[]
   };
   render(){
     return (
       <div className="search-books">
-        <form onSubmit={this.handleSubmit}>
         <div className="search-books-bar">
           <Link to="/" className="btn-search close-search">Close</Link>
           <div className="search-books-input-wrapper">
@@ -41,14 +57,12 @@ class SearchBooks extends React.Component{
               you don't find a specific author or title. Every search is limited by search terms.
             */}
 
-            <input name="query" type="text" placeholder="Search by title or author"/>
+            <input name="query" type="text" placeholder="Search by title or author" onChange={this.search}/>
 
           </div>
-          <button className="btn-search active-search" type="submit">Search</button>
         </div>
-        </form>
         <div className="search-books-results">
-          <BooksGrid books={this.state.books}  onShelfChange={this.props.onShelfChange}/>
+          <BooksGrid books={this.state.books}  onShelfChange={this.onShelfChange}/>
         </div>
       </div>
     );
