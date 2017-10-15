@@ -96,3 +96,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 Copyright (c) 2017 Min Li
 
 This program is free software: you can redistribute it and/or modify it under the terms of the Apache License Version 2.0 as published by Apache Software Foundation.
+
+## Demo
+https://nd019-myreads.herokuapp.com/
